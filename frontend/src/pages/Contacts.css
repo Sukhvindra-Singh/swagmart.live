@@ -1,0 +1,12 @@
+@media ( width<= 550px){
+
+    .contact-inner-wrapper{
+        width: 85vw;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+    .contact-inner-wrapper > div{
+        width: 80vw;
+    }
+}

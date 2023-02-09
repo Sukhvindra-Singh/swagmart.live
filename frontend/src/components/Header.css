@@ -1,0 +1,104 @@
+.heading {
+  width: 250px;
+}
+.search-input {
+  width: 32vw;
+}
+@media (width<=550px) {
+  .navbar-1 {
+    position: relative;
+  }
+  .header-upper-links {
+    position: absolute;
+    top: -7%;
+    right: 10%;
+    width: 38%;
+    margin-bottom: 10px;
+    gap: 2px;
+  }
+  .header-top-strip >div>div>div > p {
+    font-size: 14px;
+  }
+  .header-upper-links > div {
+    width: 79px;
+  }
+  .header-upper .header-upper-links img {
+    height: 24px;
+    width: 24px;
+  }
+  .header-upper .header-upper-links .badge-1 > span {
+    padding: 3px 0;
+    font-size: 12px;
+  }
+  .header-upper .header-upper-links .badge-1 > p {
+    font-size: 13px;
+  }
+  .header-upper .header-upper-links .account-links > a {
+    width: 127px;
+    font-size: 12px;
+  }
+  .heading{
+    width: 190px;
+  }
+  .heading > h2{
+    font-size: 16px;
+  }
+  .header-bottom {
+    width: 100vw;
+  }
+  .menu {
+    flex-direction: column;
+    gap: 13px;
+    padding: 10px;
+  }
+  .search-input {
+    width: 100vw;
+    margin-top: 10px;
+  }
+}
+@media ((width >= 551px) and (width<=1000px)) {
+  .navbar-1 {
+    position: relative;
+  }
+  .header-upper-links {
+    position: absolute;
+    top: -7%;
+    right: 8%;
+    width: 50%;
+  }
+  .header-upper-links > div {
+    width: 95px;
+  }
+  .header-upper .header-upper-links img {
+    height: 36px;
+    width: 36px;
+  }
+  .header-upper .header-upper-links .badge-1 > span {
+    padding: 3px 0;
+    font-size: 15px;
+  }
+  .header-upper .header-upper-links .badge-1 > p {
+    font-size: 17px;
+    font-weight: 500;
+  }
+  .header-upper .header-upper-links .account-links > a {
+    width: 146px;
+    font-size: 17px;
+    font-weight: 500;
+  }
+  .heading {
+    width: 220px;
+  }
+  .header-bottom {
+    width: 100vw;
+  }
+  .menu {
+    flex-direction: column;
+    gap: 13px;
+    padding: 10px;
+  }
+  .search-input{
+      width: 100vw;
+      margin-top: 10px;
+  }
+}
