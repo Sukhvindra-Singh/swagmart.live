@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import {   newProductReducer,
+import {
+  newProductReducer,
   newReviewReducer,
   productDetailsReducer,
   productReducer,
   productReviewsReducer,
   productsReducer,
-  reviewReducer, } from "../reducers/productReducers";
+  reviewReducer,
+} from "../reducers/productReducers";
 
 import {
   allUsersReducer,
@@ -14,7 +16,7 @@ import {
   userDetailsReducer,
   userReducer,
 } from "../reducers/userReducer";
-import { cartReducer } from "../reducers/cartReducers";
+import cartReducer, { getTotals } from "../slices/cartSlice"
 
 import {
   allOrdersReducer,
@@ -24,9 +26,12 @@ import {
   orderReducer,
 } from "../reducers/orderReducer";
 
+import {newQueryReducer,getContactQueryReducer,deleteQueryReducer} from "../reducers/contactReducer";
+
+
 const reducer = combineReducers({
-  products : productsReducer,
-  productDetails : productDetailsReducer,
+  products: productsReducer,
+  productDetails: productDetailsReducer,
   newReview: newReviewReducer,
   user: userReducer,
   profile: profileReducer,
@@ -43,21 +48,25 @@ const reducer = combineReducers({
   order: orderReducer,
   productReviews: productReviewsReducer,
   review: reviewReducer,
+  newQuery:newQueryReducer,
+  allqueries:getContactQueryReducer,
+  deleteQuery:deleteQueryReducer
 });
-let initialState = {
-  cart: {
-    cartItems: JSON.parse(localStorage.getItem("cartItems"))
-      ? JSON.parse(localStorage.getItem("cartItems"))
-      : [],
-    shippingInfo: localStorage.getItem("shippingInfo")
-      ? JSON.parse(localStorage.getItem("shippingInfo"))
-      : {},
-  },
+
+const initialState = {
+  cartItems: localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [],
+  cartTotalQuantity: 0,
+  cartTotalAmount: 0,
+  shippingInfo: localStorage.getItem("shippingInfo")
+    ? JSON.parse(localStorage.getItem("shippingInfo"))
+    : {},
 };
 
 export const store = configureStore({
   reducer,
   initialState,
 });
-
+store.dispatch(getTotals());
 export default store;

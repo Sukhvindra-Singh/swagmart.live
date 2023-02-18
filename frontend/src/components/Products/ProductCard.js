@@ -3,7 +3,7 @@ import ReactStars from "react-rating-stars-component";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
-import { addItemsToCart } from "../../actions/cartAction";
+import { addToCart } from "../../slices/cartSlice";
 import "../../pages/Home.css"
 
 const ProductCard = ({ product, grid }) => {
@@ -20,7 +20,7 @@ const ProductCard = ({ product, grid }) => {
   }
 
   const addToCartHandler = () => {
-    dispatch(addItemsToCart(product._id,1));
+    dispatch(addToCart(product));
     alert.success("Item Added To Cart");
   };
   return (
@@ -57,7 +57,7 @@ const ProductCard = ({ product, grid }) => {
           <p className="description text-dark">
             {product && product.description}
           </p>
-          <p className="price">$&nbsp;{product && product.price}</p>
+          <p className="price">₹&nbsp;{product && product.price}</p>
         </div>
         <div className="action-bar position-absolute">
           <div className="d-flex flex-column gap-15">
@@ -73,7 +73,7 @@ const ProductCard = ({ product, grid }) => {
                 alt="view"
               />
             </Link> */}
-            <Link to="/cart" onClick={addToCartHandler}>
+            <Link to={location} onClick={addToCartHandler}>
               <img
                 src="https://res.cloudinary.com/dk0o7tdks/image/upload/v1675353206/images/add-cart_mhxvbg.png"
                 alt="addcart"

@@ -60,9 +60,8 @@ export const getProduct =
           ? `&stock[gte]=1`
           : `&stock[lte]=0`;
 
-      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}${stock}${size}${color}${category}${brand}${sortFilter}`;
+      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}${stock}${size}${color}${category}${brand}${sortFilter}`;
       
-
       const { data } = await axios.get(link);
 
       dispatch({
@@ -139,6 +138,7 @@ export const createProduct = (productData) => async (dispatch) => {
     });
   }
 };
+
 
 // Update Product
 export const updateProduct = (id, productData) => async (dispatch) => {

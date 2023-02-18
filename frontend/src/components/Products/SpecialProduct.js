@@ -1,17 +1,17 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
-import { addItemsToCart } from "../../actions/cartAction";
+import { addToCart } from "../../slices/cartSlice";
 import { useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
+import "./SpecialProducts.css"
 
 const SpecialProduct = ({ product }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
   const addToCartHandler = () => {
-    console.log("cart")
-    dispatch(addItemsToCart(product._id,1));
+    dispatch(addToCart(product));
     alert.success("Item Added To Cart");
   };
   let classname = `col-4 mb-3`;
@@ -33,8 +33,8 @@ const SpecialProduct = ({ product }) => {
               activeColor="#ffd700"
             />
             <p className="price">
-              <span className="text-danger">{product && product.price}</span>{" "}
-              &nbsp; <strike>$200000</strike>
+              <span className="text-danger">₹{product && product.price}</span>{" "}
+              &nbsp; <strike>₹{product.price + product.price*0.10}</strike>
             </p>
             <div className="discount-till d-flex align-items-center gap-10">
               <p className="mb-0">
@@ -47,7 +47,7 @@ const SpecialProduct = ({ product }) => {
               </div>
             </div>
             <div className="product-count mt-3">
-              <p>Products : 5</p>
+              <p>Products : {product.stock}</p>
               <div className="progress">
                 <div
                   className="progress-bar"
@@ -59,7 +59,7 @@ const SpecialProduct = ({ product }) => {
                 ></div>
               </div>
             </div>
-            <Link to="/cart" className="button mt-3" onClick={addToCartHandler}>Add to Cart</Link>
+            <Link  className="button mt-3" onClick={addToCartHandler}>Add to Cart</Link>
           </div>
         </div>
       </div>

@@ -21,7 +21,6 @@ var productSchema = new mongoose.Schema({
   },
   ratings: {
     type: Number,
-    default : 0
   },
   images: [
     {
@@ -49,9 +48,9 @@ var productSchema = new mongoose.Schema({
     maxLength : [5,"Stock cannot exceed 5 characters"],
     default : 1
   },
-  noOfReviews:{
+  numOfReviews:{
     type:Number,
-    dafault : 0
+    default : 0
   },
   color:{
     type:String,

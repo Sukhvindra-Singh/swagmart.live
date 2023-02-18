@@ -1,4 +1,4 @@
-@media (width <= 550px) {
+@media (width <= 600px) {
   .footer-top-data {
     gap: 7px;
     width: 100px;
@@ -40,10 +40,10 @@
     width: fit-content;
   }
   footer .footer-middle-databox-1 {
-    font-size: 8px;
+    font-size: 7px;
   }
   footer .footer-middle-heading {
-    font-size: 12px;
+    font-size: 11px;
   }
   .social-icon {
     gap: 14px;
@@ -52,7 +52,7 @@
     font-size: 14px;
   }
 }
-@media ((width >= 551px) and (width <= 1000px)) {
+@media ((width >= 601px) and (width <= 1025px)) {
   .footer-top-data {
     gap: 10px;
     width: 140px;

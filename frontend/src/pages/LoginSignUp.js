@@ -111,7 +111,7 @@ const LoginSignUp = () => {
           <MetaData title={"Login"} />
           <div className="LoginSignUpContainer">
             <div className="LoginSignUpBox">
-              <div>
+              <div className="toggle">
                 <div className="login_signUp_toggle">
                   <p onClick={(e) => switchTabs(e, "login")}>LOGIN</p>
                   <p onClick={(e) => switchTabs(e, "register")}>REGISTER</p>

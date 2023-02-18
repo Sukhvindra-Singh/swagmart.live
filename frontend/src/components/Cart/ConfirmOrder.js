@@ -1,4 +1,4 @@
-import React, { Fragment,useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import CheckoutSteps from "../Cart/CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../MetaData";
@@ -7,70 +7,57 @@ import { Link, useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { createOrder, clearErrors } from "../../actions/orderAction";
 import { useAlert } from "react-alert";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
+import { getTotals } from "../../slices/cartSlice";
 const ConfirmOrder = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const { error } = useSelector((state) => state.newOrder);
-  const { shippingInfo, cartItems } = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
+  const { shippingInfo } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.quantity * item.price,
-    0
-  );
+  const subtotal = cart.cartTotalAmount;
 
-  const shippingCharges = subtotal > 1000 ? 0 : 200;
+  const shippingCharges = subtotal > 500 ? 0 : 0;
 
-  const tax = subtotal * 0.18;
+  const tax = subtotal * 0;
 
   const totalPrice = subtotal + tax + shippingCharges;
 
   const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
   const order = {
     shippingInfo,
-    orderItems: cartItems,
+    orderItems: cart,
     itemsPrice: subtotal,
     taxPrice: tax,
     shippingPrice: shippingCharges,
     totalPrice: totalPrice,
   };
-  const onlinePayment = ()=>{
-    const data = {
-      subtotal,
-      shippingCharges,
-      tax,
-      totalPrice,
-    };
-   
-    sessionStorage.setItem("orderInfo", JSON.stringify(data));
+  const onlinePayment = () => {
+    sessionStorage.setItem("orderInfo", JSON.stringify(order));
     navigate("/payment/process");
-
-  }
-  const codPayment = ()=>{
+  };
+  const codPayment = () => {
     order.paymentInfo = {
       id: uuidv4(),
       status: "COD",
     };
+
     dispatch(createOrder(order));
     navigate("/success");
-  }
-  // const proceedToPayment = (mode) => {
-  //   console.log(mode)
-  //   if(mode === "cod"){
-  //    codPayment();
-  //   }else if(mode === "online"){
-  //     onlinePayment();
-  //   }
-  // };
+  };
+  cart.cartItems.map((item) => (
+    console.log(item.images))
+  )
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-
-  }, [dispatch, error, alert]);
+    dispatch(getTotals());
+  }, [dispatch, cart, error, alert]);
   return (
     <Fragment>
       <MetaData title="Confirm Order" />
@@ -97,16 +84,16 @@ const ConfirmOrder = () => {
           <div className="confirmCartItems">
             <Typography>Your Cart Items:</Typography>
             <div className="confirmCartItemsContainer">
-              {cartItems &&
-                cartItems.map((item) => (
+              {cart.cartItems &&
+                cart.cartItems.map((item) => (
                   <div key={item.product}>
-                    <img src={item.image} alt="Product" />
+                    <img src={item.images[0].url} alt="Product" />
                     <Link to={`/product/${item.product}`}>
                       {item.name}
                     </Link>{" "}
                     <span>
-                      {item.quantity} X ₹{item.price} ={" "}
-                      <b>₹{item.price * item.quantity}</b>
+                      {item.cartQuantity} X ₹{item.price} ={" "}
+                      <b>₹{item.price * item.cartQuantity}</b>
                     </span>
                   </div>
                 ))}
@@ -138,8 +125,12 @@ const ConfirmOrder = () => {
               </p>
               <span>₹{totalPrice}</span>
             </div>
-                <button onClick={codPayment} className="mb-2">Cash On Delivery</button>
-                <button onClick={onlinePayment} className="mt-2">Online</button>
+            <button onClick={codPayment} className="mb-2">
+              Cash On Delivery
+            </button>
+            <button onClick={onlinePayment} className="mt-2">
+              Online
+            </button>
             {/* <button onSubmit={proceedToPayment(mode)}>Proceed</button> */}
           </div>
         </div>

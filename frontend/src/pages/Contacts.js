@@ -1,11 +1,33 @@
-import React from "react";
+import React,{useState} from "react";
 import MetaData from "../components/MetaData";
 import BreadCrumb from "../components/BreadCrumb";
 import { AiOutlineHome, AiOutlineMail } from "react-icons/ai";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsInfoCircle } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import {createQuery} from "../actions/contactAction"
 import "./Contacts.css"
 const Contacts = () => {
+  const dispatch = useDispatch();
+  
+  const [name, setName] = useState("");
+  const [email,setEmail] = useState("");
+  const [phone,setPhone] = useState("");
+  const [comments,setComments] = useState("");
+
+  const contactFormSubmitHandler = (e) =>{
+    e.preventDefault();
+
+    const formData = new FormData();
+  
+    formData.set('name',name);
+    formData.set("email",email);
+    formData.set("phone",phone);
+    formData.set("comments",comments);
+  
+    dispatch(createQuery(formData));
+
+  }
   return (
     <div>
       <MetaData title={"Contacts Us"} />
@@ -33,36 +55,42 @@ const Contacts = () => {
                     <div>
                       <input
                         type="text"
+                        name="name"
                         className="form-control"
                         placeholder="Name"
+                        onChange={(e)=> setName(e.target.value)}
                       />
                     </div>
                     <div>
                       <input
                         type="text"
+                        name="email"
                         className="form-control"
                         placeholder="Email"
+                        onChange={(e)=> setEmail(e.target.value)}
                       />
                     </div>
                     <div>
                       <input
                         type="text"
+                        name="phone"
                         className="form-control"
                         placeholder="Phone Number"
+                        onChange={(e)=> setPhone(e.target.value)}
                       />
                     </div>
                     <div>
                       <textarea
-                        name=""
-                        id=""
+                        name="comments"
                         cols={30}
                         rows={10}
                         className="form-control"
                         placeholder="Comments"
+                        onChange={(e)=> setComments(e.target.value)}
                       ></textarea>
                     </div>
                     <div>
-                      <button className="button border-0">Submit</button>
+                      <button className="button border-0" onClick={contactFormSubmitHandler}>Submit</button>
                     </div>
                   </form>
                 </div>

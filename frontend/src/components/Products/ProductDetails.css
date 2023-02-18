@@ -15,18 +15,22 @@
     box-sizing: border-box;
     border: 1px solid white;
   }
-  .Carousel-style{
-    width: 30%;
-  }
-  .ProductDetails > div:last-child {
-    align-items: flex-start;
-  }
-  
-  .CarouselImage {
-    width: 100%;
-    height: 600px;
-  
-  }
+  .carousel .slider-wrapper {
+    width: 70%;
+    overflow: hidden;
+    margin: auto;
+    width: 60;
+    height: 25vw;
+    transition: height .15s ease-in;
+}
+.carousel .slide img {
+  width: 85%;
+  vertical-align: top;
+  border: 0;
+}
+.carousel-root{
+  width: 50vw;
+}
   .image-style{
     width:100%;
     height: 100%;
@@ -38,7 +42,7 @@
   
   .detailsBlock-1 > p {
     color: rgba(54, 54, 54, 0.582);
-    font: 200 0.6vmax cursive;
+    font: 200 0.6vmax 'Segoe UI';
   }
   
   .detailsBlock-2 {
@@ -52,7 +56,7 @@
   }
   
   .detailsBlock-2-span {
-    font: 200 0.8vmax cursive;
+    font: 200 0.8vmax 'Segoe UI';
     color: rgba(0, 0, 0, 0.699);
   }
   
@@ -185,15 +189,17 @@
     padding: 3vmax;
   }
   .reviewCard > img {
-    width: 5vmax;
-  }
+    width: 4vmax;
+    height: 4vmax;
+    border-radius: 43px;
+}
   .reviewCard > p {
     color: rgba(0, 0, 0, 0.836);
     font: 600 0.9vmax "Roboto";
   }
   .reviewCardComment {
     color: rgba(0, 0, 0, 0.445);
-    font: 300 0.8vmax cursive;
+    font: 300 0.8vmax 'Segoe UI';
   }
   
   .noReviews {
@@ -207,17 +213,22 @@
       flex-direction: column;
       height: unset;
     }
-    .Carousel-style{
-      width: 100%;
-      margin: 0px 0px;
-      padding: 2vmax;
-      box-sizing: border-box;
-      border: 1px solid white;
-    }
-    .CarouselImage{
-      width: 100%;
-      height: 400px;
-    }
+  .carousel .slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    margin: auto;
+    height: 50vh;
+    transition: height .15s ease-in;
+}
+.carousel .slide img {
+  width: 300px;
+  height: 50vmax;
+  vertical-align: top;
+  border: 0;
+}
+.carousel-root{
+  width: 100vw;
+}
     .ProductDetails > div:last-child {
       align-items: center;
     }
@@ -276,7 +287,6 @@
     }
   
     .detailsBlock-4 {
-      margin-left: 80px;
       font: 500 2.5vmax sans-serif;
     }
   
@@ -289,14 +299,39 @@
       padding: 1.5vmax;
       width: 20vmax;
       margin: 3vmax 0;
-      margin-left: 55px;
     }
   
     .reviewCard > p {
       font: 600 3vw "Roboto";
     }
     .reviewCardComment {
-      font: 300 5vw cursive;
+      font: 300 5vw 'Segoe UI';
     }
+    .reviewCard > img {
+      width: 6vmax;
+      height: 6vmax;
+      border-radius: 43px;
+  }
+  }
+  @media ((width >= 601px) and (width <= 1025px)) {
+    .ProductDetails {
+      flex-direction: row;
+      height: unset;
+    }
+    .Carousel-style{
+      height: 500px;
+      margin: 0px 0px;
+      padding: 2vmax;
+      box-sizing: border-box;
+      border: 1px solid white;
+    }
+    .Carousel-style > div{
+      height: 550px;
+    }
+    .CarouselImage{
+      width: 100%;
+      height: 480px;
+    }
+    
   }
   

@@ -43,7 +43,7 @@ a{
 
 /* Header Part*/
 
-.header-top-strip{
+/* .header-top-strip{
   border-bottom: 1px solid var(--color-3b4149);
   background-color: var(--color-131921);
 }
@@ -56,9 +56,9 @@ a{
   background-color: var(--color-febd69);
 }
 
-.header-upper .header-upper-links img{
-  height: 35px;
-  width: 35px;
+.header-upper .header-upper-links img {
+  height: 60px;
+  width: 60px;
 }
 .gap-5{
   gap: 5px;
@@ -111,7 +111,7 @@ a{
 }
 .header-bottom .menu-links a:hover{
   color: rgb(177, 83, 218);
-}
+} */
 
 /* Header Part End Here */
 
@@ -611,15 +611,3 @@ footer .social-icon-font{
 }
 
 /* User Options */
-
-.speedDial {
-  position: fixed;
-  right: 3vmax;
-  top: 4.6vmax;
-}
-
-.speedDialIcon {
-  width: 76px;
-  height: 66px;
-  border-radius: 100%;
-}

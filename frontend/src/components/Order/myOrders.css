@@ -79,3 +79,10 @@
     font: 500 5vw "Roboto" !important;
   }
 }
+@media ((width >= 551px) and ((width<=1025px))) {
+  .myOrdersTable div {
+    font: 300 1.5vmax "Roboto";
+    color: rgba(0, 0, 0, 0.678);
+    border: none;
+  }
+}

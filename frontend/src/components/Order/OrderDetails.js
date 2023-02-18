@@ -3,14 +3,14 @@ import "./orderDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../Loader/Loader";
 import MetaData from "../MetaData";
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { getOrderDetails, clearErrors } from "../../actions/orderAction";
 import { useAlert } from "react-alert";
 
 const OrderDetails = () => {
   const { order, error, loading } = useSelector((state) => state.orderDetails);
-  const {id} = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const alert = useAlert();
 
@@ -21,7 +21,7 @@ const OrderDetails = () => {
     }
 
     dispatch(getOrderDetails(id));
-  }, [dispatch, alert, error,id]);
+  }, [dispatch, alert, error, id]);
   return (
     <Fragment>
       {loading ? (
@@ -65,10 +65,7 @@ const OrderDetails = () => {
                         : "redColor"
                     }
                   >
-                    {order.paymentInfo &&
-                    order.paymentInfo.status === "succeeded"
-                      ? "PAID"
-                      : "NOT PAID"}
+                    {order.paymentInfo && order.paymentInfo.status === "succeeded" ? "Paid Online":"COD"}
                   </p>
                 </div>
 
@@ -98,15 +95,15 @@ const OrderDetails = () => {
               <Typography>Order Items:</Typography>
               <div className="orderDetailsCartItemsContainer">
                 {order.orderItems &&
-                  order.orderItems.map((item) => (
-                    <div key={item.product}>
-                      <img src={item.image} alt="Product" />
-                      <Link to={`/product/${item.product}`}>
+                  order.orderItems.cartItems.map((item,i) => (
+                    <div key={i}>
+                      <img src={item.images[0].url} alt="Product" />
+                      <Link to={`/product/${item._id}`}>
                         {item.name}
                       </Link>{" "}
                       <span>
-                        {item.quantity} X ₹{item.price} ={" "}
-                        <b>₹{item.price * item.quantity}</b>
+                        {item.cartQuantity} X ₹{item.price} ={" "}
+                        <b>₹{item.price * item.cartQuantity}</b>
                       </span>
                     </div>
                   ))}

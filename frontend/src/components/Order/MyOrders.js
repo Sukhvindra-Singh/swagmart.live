@@ -17,14 +17,14 @@ const MyOrders = () => {
 
   const { loading, error, orders } = useSelector((state) => state.myOrders);
   const { user } = useSelector((state) => state.user);
-
+  
   const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 300, flex: 1 },
+    { field: "id", headerName: "Order ID", minWidth: 270, flex: 1 },
 
     {
       field: "status",
       headerName: "Status",
-      minWidth: 150,
+      minWidth: 120,
       flex: 0.5,
       cellClassName: (params) => {
         return params.getValue(params.id, "status") === "Delivered"
@@ -34,9 +34,9 @@ const MyOrders = () => {
     },
     {
       field: "itemsQty",
-      headerName: "Items Qty",
+      headerName: "Qty",
       type: "number",
-      minWidth: 150,
+      minWidth: 60,
       flex: 0.3,
     },
 
@@ -44,7 +44,7 @@ const MyOrders = () => {
       field: "amount",
       headerName: "Amount",
       type: "number",
-      minWidth: 270,
+      minWidth: 100,
       flex: 0.5,
     },
 
@@ -52,7 +52,7 @@ const MyOrders = () => {
       field: "actions",
       flex: 0.3,
       headerName: "Actions",
-      minWidth: 150,
+      minWidth: 100,
       type: "number",
       sortable: false,
       renderCell: (params) => {
@@ -72,7 +72,7 @@ const MyOrders = () => {
 orders &&
     orders.forEach((item) => {
       rows.push({
-        itemsQty: item.orderItems.length,
+        itemsQty: item.orderItems.cartItems.length,
         id: item._id,
         status: item.orderStatus,
         amount: item.totalPrice,
@@ -87,8 +87,7 @@ orders &&
     }
 
     dispatch(myOrders());
-  }, [dispatch, alert, error]);
-
+  }, [dispatch, alert, error,user]);
   return (
     <Fragment>
       <MetaData title={`${user.name} - Orders`} />
@@ -103,7 +102,7 @@ orders &&
             pageSize={10}
             disableSelectionOnClick
             className="myOrdersTable"
-            autoHeight
+
           />
 
           <Typography id="myOrdersHeading">{user.name}'s Orders</Typography>

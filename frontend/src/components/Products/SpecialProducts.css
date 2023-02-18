@@ -1,0 +1,46 @@
+@media ((width <= 600px)){
+    .special-product-card img {
+        width: 150px;
+        height: 190px;
+    }
+    .special-product-content > h5{
+        font-size: 14px;
+        color: black;
+    }
+    .special-product-content > h6{
+        font-size: 18px;
+        color: black;
+    }
+    .discount-till > p{
+        font-size: 14px;
+    }
+    .discount-till > div > span{
+        padding: 6px;
+    }
+    .button{
+        font-size: 15px;
+    }
+}
+@media ((width >= 601px) and (width <= 1025px)){
+    .special-product-card img {
+        width: 150px;
+        height: 190px;
+    }
+    .special-product-content > h5{
+        font-size: 15px;
+        color: black;
+    }
+    .special-product-content > h6{
+        font-size: 18px;
+        color: black;
+    }
+    .discount-till > p{
+        font-size: 14px;
+    }
+    .discount-till > div > span{
+        padding: 8px 11px;
+    }
+    .button{
+        font-size: 17px;
+    }
+}

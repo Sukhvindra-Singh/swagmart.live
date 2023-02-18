@@ -29,31 +29,90 @@ const orderSchema = new mongoose.Schema({
       required: true,
     },
   },
-  orderItems: [
-    {
-      name: {
+  orderItems: {
+    cartItems: [
+      {
+        _id: {
+          type: String,
+          required: true,
+        },
+        name: {
+          type: String,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        brand: {
+          type: String,
+          required: true,
+        },
+        ratings: {
+          type: Number,
+          required: true,
+        },
+        images: [
+          {
+            public_id: {
+              type: String,
+              required: true,
+            },
+            url: {
+              type: String,
+              required: true,
+            },
+          },
+        ],
+        category: {
+          type: String,
+          required: true,
+        },
+        cartQuantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    cartTotalAmount: {
+      type: Number,
+    },
+    cartTotalQuantity: {
+      type: Number,
+    },
+    shippingInfo: {
+      address: {
         type: String,
         required: true,
       },
-      price: {
-        type: Number,
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-      image: {
+      city: {
         type: String,
         required: true,
       },
-      product: {
-        type: mongoose.Schema.ObjectId,
-        ref: "Product",
+
+      state: {
+        type: String,
+        required: true,
+      },
+
+      country: {
+        type: String,
+        required: true,
+      },
+      pinCode: {
+        type: Number,
+        required: true,
+      },
+      phoneNo: {
+        type: Number,
         required: true,
       },
     },
-  ],
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
@@ -71,7 +130,7 @@ const orderSchema = new mongoose.Schema({
   },
   paidAt: {
     type: Date,
-    required: true,
+    default: Date.now,
   },
   itemsPrice: {
     type: Number,

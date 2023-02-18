@@ -1,110 +1,149 @@
-import React, { Fragment} from "react";
-import "./Cart.css";
-import CartItemCard from "./CartItemCard.js";
-import { useSelector, useDispatch } from "react-redux";
-import { addItemsToCart, removeItemsFromCart} from "../../actions/cartAction";
-import { Typography } from "@material-ui/core";
-import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  clearCart,
+  decreaseCart,
+  getTotals,
+  removeFromCart,
+} from "../../slices/cartSlice";
 
-
+import { Link } from "react-router-dom";
+// import PayButton from "./PayButton";
+import "./Cart.css"
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
+  const {isAuthenticated} = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  let { cartItems } = useSelector((state) => state.cart);
   const navigate = useNavigate();
-  let allcartItems = JSON.parse(localStorage.getItem("cartItems"))
 
-  const increaseQuantity = (id, quantity, stock) => {
-    const newQty = quantity + 1;
-    if (stock <= quantity) {
-      return;
-    }
-    dispatch(addItemsToCart(id, newQty));
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
+
+  const handleAddToCart = (product) => {
+    
+    dispatch(addToCart(product));
   };
-
-  const decreaseQuantity = (id, quantity) => {
-    const newQty = quantity - 1;
-    if (1 >= quantity) {
-      return;
-    }
-    dispatch(addItemsToCart(id, newQty));
+  const handleDecreaseCart = (product) => {
+    dispatch(decreaseCart(product));
   };
-
-  const deleteCartItems = (id) => {
-    dispatch(removeItemsFromCart(id));
+  const handleRemoveFromCart = (product) => {
+    dispatch(removeFromCart(product));
+  };
+  const handleClearCart = () => {
+    dispatch(clearCart());
   };
   const checkoutHandler = () => {
     navigate("/shipping");
   };
- 
   return (
-    <Fragment>
-      {allcartItems.length === 0 ? (
-        <div className="emptyCart">
-          <RemoveShoppingCartIcon />
-
-          <Typography>No Product in Your Cart</Typography>
-          <Link to="/store">View Products</Link>
+    <div className="cart-container">
+      <h2>Shopping Cart</h2>
+      {cart.cartItems.length === 0 ? (
+        <div className="cart-empty">
+          <p>Your cart is currently empty</p>
+          <div className="start-shopping">
+            <Link to="/">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="bi bi-arrow-left"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                />
+              </svg>
+              <span>Start Shopping</span>
+            </Link>
+          </div>
         </div>
       ) : (
-        <Fragment>
-          <div className="cartPage">
-            <div className="cartHeader">
-              <p>Product</p>
-              <p>Quantity</p>
-              <p>Subtotal</p>
-            </div>
-
-            {allcartItems &&
-              allcartItems.map((item) => (
-                <div className="cartContainer" key={item.product}>
-                  <CartItemCard item={item} deleteCartItems={deleteCartItems} />
-                  <div className="cartInput">
-                    <button
-                      onClick={() =>
-                        decreaseQuantity(item.product, item.quantity)
-                      }
-                    >
+        <div>
+          <div className="titles">
+            <h3 className="product-title">Product</h3>
+            <h3 className="price">Price</h3>
+            <h3 className="quantity">Quantity</h3>
+            <h3 className="total">Total</h3>
+          </div>
+          <div className="cart-items">
+            {cart.cartItems &&
+              cart.cartItems.map((cartItem) => (
+                <div className="cart-item" key={cartItem._id}>
+                  <div className="cart-product">
+                    <img src={cartItem.images[0].url} alt={cartItem.name} />
+                    <div>
+                      <h3>{cartItem.name}</h3>
+                      <p>{cartItem.description}</p>
+                      <button onClick={() => handleRemoveFromCart(cartItem)}>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                  <div className="cart-product-price">₹{cartItem.price}</div>
+                  <div className="cart-product-quantity">
+                    <button onClick={() => handleDecreaseCart(cartItem)}>
                       -
                     </button>
-                    <input type="number" value={item.quantity} readOnly />
-                    <button
-                      onClick={() =>
-                        increaseQuantity(
-                          item.product,
-                          item.quantity,
-                          item.stock
-                        )
-                      }
-                    >
-                      +
-                    </button>
+                    <div className="count">{cartItem.cartQuantity}</div>
+                    <button onClick={() => handleAddToCart(cartItem)}>+</button>
                   </div>
-                  <p className="cartSubtotal">{`₹${
-                    item.price * item.quantity
-                  }`}</p>
+                  <div className="cart-product-total-price">
+                  ₹{cartItem.price * cartItem.cartQuantity}
+                  </div>
                 </div>
               ))}
-
-            <div className="cartGrossProfit">
-              <div></div>
-              <div className="cartGrossProfitBox">
-                <p>Gross Total</p>
-                <p>{`₹${cartItems.reduce(
-                  (acc, item) => acc + item.quantity * item.price,
-                  0
-                )}`}</p>
+          </div>
+          <div className="cart-summary">
+            <button className="clear-btn" onClick={() => handleClearCart()}>
+              Clear Cart
+            </button>
+            <div className="cart-checkout">
+              <div className="subtotal">
+                <span>Subtotal</span>
+                <span className="amount">₹{cart.cartTotalAmount}</span>
               </div>
-              <div></div>
-              <div className="checkOutBtn">
+              <p>Taxes and shipping calculated at checkout</p>
+              {isAuthenticated ? (
                 <button onClick={checkoutHandler}>Check Out</button>
+                // <PayButton cartItems={cart.cartItems} />
+              ) : (
+                <button
+                  className="cart-login"
+                  onClick={() => navigate("/login")}
+                >
+                  Login to Check out
+                </button>
+              )}
+
+              <div className="continue-shopping">
+                <Link to="/">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    className="bi bi-arrow-left"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                    />
+                  </svg>
+                  <span>Continue Shopping</span>
+                </Link>
               </div>
             </div>
           </div>
-        </Fragment>
+        </div>
       )}
-    </Fragment>
+    </div>
   );
 };
 

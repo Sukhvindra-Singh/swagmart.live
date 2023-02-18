@@ -49,7 +49,6 @@ exports.getAllProducts = catchAsyncErrors(async (req,res)=>{
 
     products = await apiFeature.query;
 
-
     res.status(201).json({
         success:true,
         products,
@@ -132,7 +131,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
     };
 
     const product = await Product.findById(productId);
-
+    
     const isReviewed = product.reviews.find(rev => rev.user.toString() === req.user._id.toString());
 
     if(isReviewed){
@@ -142,6 +141,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
                 (rev.comment = comment);
             }
         })
+        product.numOfReviews = product.reviews.length
     }else{
         product.reviews.push(review);
         product.numOfReviews = product.reviews.length
@@ -151,7 +151,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
         avg += rev.rating
     })
     product.ratings = avg/product.reviews.length;
-
+    
     await product.save({validateBeforeSave : false});
 
     res.status(200).json({

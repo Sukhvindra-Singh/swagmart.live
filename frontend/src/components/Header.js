@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import "./Header.css"
-
-const Header = ({ user }) => {
+import "./Header.css";
+import UserOptions from "./UserOptions";
+import { useSelector, useDispatch } from "react-redux";
+import { getTotals } from "../slices/cartSlice";
+const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [keyword, setKeyword] = useState("");
-  let allcartItems = JSON.parse(localStorage.getItem("cartItems"))
-  
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   const searchSubmitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
@@ -17,11 +20,14 @@ const Header = ({ user }) => {
       navigate("/store");
     }
   };
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
   return (
     <>
       <header className="header-top-strip py-3">
         <div className="container-xxl">
-          <div className="row">
+          <div className="row" style={{ height: "55px" }}>
             <div className="col-6">
               <p className="text-white mb-0">
                 Free Shipping Over $100 & Free Returns
@@ -63,6 +69,23 @@ const Header = ({ user }) => {
               </div>
             </div>
             <div className="col-5 header-links">
+              <div className="header-upper-links-1">
+                <Link
+                  to="/cart"
+                  className="d-flex align-items-center gap-10 text-white cart"
+                >
+                  <img
+                    src="https://res.cloudinary.com/dk0o7tdks/image/upload/v1675353206/images/cart_izcsam.png"
+                    alt="cart"
+                  />
+                  <div className="d-flex flex-column badge-1">
+                    <span className="badge bg-white text-dark">
+                      {cart.cartItems.length}
+                    </span>
+                    <p className=" mb-0">₹{cart.cartTotalAmount}</p>
+                  </div>
+                </Link>
+              </div>
               <div className="header-upper-links d-flex align-items-center gap-15">
                 {/* <div>
                   <Link
@@ -92,25 +115,12 @@ const Header = ({ user }) => {
                     </p>
                   </Link>
                 </div> */}
-                <div>
-                  <Link
-                    to="/cart"
-                    className="d-flex align-items-center gap-10 text-white"
-                  >
-                    <img
-                      src="https://res.cloudinary.com/dk0o7tdks/image/upload/v1675353206/images/cart_izcsam.png"
-                      alt="cart"
-                    />
-                    <div className="d-flex flex-column badge-1">
-                      <span className="badge bg-white text-dark">{allcartItems.length}</span>
-                      <p className=" mb-0">{`₹${allcartItems.reduce(
-                  (acc, item) => acc + item.quantity * item.price,
-                  0
-                )}`}</p>
-                    </div>
-                  </Link>
-                </div>
-                {!user ? (
+
+                {isAuthenticated ? (
+                  <div className="p-0">
+                    <UserOptions user={user} />
+                  </div>
+                ) : (
                   <div className="account-links">
                     <Link
                       to="/login"
@@ -125,8 +135,6 @@ const Header = ({ user }) => {
                       </p>
                     </Link>
                   </div>
-                ) : (
-                  ""
                 )}
               </div>
             </div>
@@ -154,7 +162,7 @@ const Header = ({ user }) => {
                         alt=""
                       />
                       <span className="me-5 d-inline-block">
-                        Shop Categories
+                        Select Shop
                       </span>
                     </button>
                     <ul

@@ -29,7 +29,8 @@ const Payment = () => {
   const payBtn = useRef(null);
   const navigate = useNavigate();
 
-  const { shippingInfo, cartItems } = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
+  const {shippingInfo} = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
   const { error } = useSelector((state) => state.newOrder);
 
@@ -39,7 +40,7 @@ const Payment = () => {
 
   const order = {
     shippingInfo,
-    orderItems: cartItems,
+    orderItems: cart,
     itemsPrice: orderInfo.subtotal,
     taxPrice: orderInfo.tax,
     shippingPrice: orderInfo.shippingCharges,
@@ -95,7 +96,7 @@ const Payment = () => {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
           };
-
+          
           dispatch(createOrder(order));
 
           navigate("/success");

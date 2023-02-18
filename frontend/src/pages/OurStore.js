@@ -124,7 +124,9 @@ const OurStore = () => {
   ]);
   // eslint-disable-next-line
   const [grid, setGrid] = useState(6);
-  const [filterShowHide, setFilterShowHide] = useState("none");
+  let width = window.innerWidth;
+  const [filterShowHide, setFilterShowHide] = useState(`${width <=600 ? "none":"block"}`);
+ 
   const handleFilterBox = () => {
     if (filterShowHide === "none") setFilterShowHide("block");
     if (filterShowHide === "block") setFilterShowHide("none");
@@ -279,10 +281,10 @@ const OurStore = () => {
                     <div className="d-flex flex-wrap">
                       <div className="colors">
                         <ul className="colors">
-                          {colors.map((color) => (
+                          {colors.map((color,i) => (
                             <li
                               style={{ backgroundColor: color }}
-                              key={color}
+                              key={i}
                               onClick={() => setColor(color)}
                             ></li>
                           ))}
@@ -313,11 +315,11 @@ const OurStore = () => {
                       className="d-flex flex-column mb-0"
                       style={{ fontSize: "15px", lineHeight: "22px" }}
                     >
-                      {sizes.map((size) => (
+                      {sizes.map((size,i) => (
                         <label
                           className="form-check-label"
                           htmlFor="color-1"
-                          key={size}
+                          key={i}
                         >
                           {size}
                         </label>
@@ -329,10 +331,10 @@ const OurStore = () => {
               <div className="filter-card mb-3">
                 <h3 className="filter-title">Product Brand</h3>
                 <div className="d-flex flex-wrap gap-10">
-                  {brands.map((brand) => (
+                  {brands.map((brand,i) => (
                     <div
                       className="product-tags d-flex flex-wrap align-items-center"
-                      key={brand}
+                      key={i}
                       onClick={() => setBrand(brand)}
                     >
                       <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
@@ -367,8 +369,8 @@ const OurStore = () => {
                       id=""
                       onChange={filterHandler}
                     >
-                      {sortby.map((item) => (
-                        <option value={item.toLowerCase()}>{item}</option>
+                      {sortby.map((item,i) => (
+                        <option value={item.toLowerCase()} key={i}>{item}</option>
                       ))}
                     </select>
                   </div>

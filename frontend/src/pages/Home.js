@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment } from "react";
-import "./Home.css"
+import "./Home.css";
 import { useSelector, useDispatch } from "react-redux";
 import Marquee from "react-fast-marquee";
 // import BlogCard from "../components/BlogCard";
@@ -8,6 +8,25 @@ import SpecialProduct from "../components/Products/SpecialProduct";
 import { getProductHome, clearErrors } from "../actions/productAction";
 import { useAlert } from "react-alert";
 import Loader from "../components/Loader/Loader";
+
+const categories = [
+  {
+    title:"Electornics",
+    imgUrl:"https://www.shutterstock.com/image-illustration/home-appliances-gas-cooker-tv-600w-289191653.jpg"
+  },
+  {
+    title:"Accessories",
+    imgUrl:"https://media.istockphoto.com/id/1094768184/photo/luxury-fashionable-gold-clothing-and-stationery-items-flat-lay-on-white-background.jpg?s=612x612&w=0&k=20&c=FBcmz2w7cYI4SrH_czfVjE_mSIYC8R4GgXl1mX5PLu4="
+  },
+  {
+    title:"Clothes",
+    imgUrl:"https://media.istockphoto.com/id/1137550851/photo/female-overcoat-in-modern-clothing-store.jpg?s=612x612&w=0&k=20&c=Oa8LYOo-0qCNmOcjryiPuRD8SoAcMrvPLbuHyMzjQrk="
+  },
+  {
+    title:"Footwear",
+    imgUrl:"https://media.istockphoto.com/id/979833570/photo/different-color-running-shoes.jpg?s=612x612&w=0&k=20&c=NU3IFiMQBeDkoh-8qolTrdLseOuDX0t7qtTygQJ9cGs="
+  },
+];
 const Home = () => {
   const dispatch = useDispatch();
 
@@ -15,7 +34,6 @@ const Home = () => {
 
   const { products, loading, error } = useSelector((state) => state.products);
 
- 
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -45,8 +63,8 @@ const Home = () => {
                       <h4>SUPERCHARGED FOR PROS</h4>
                       <h5>Ear Buds</h5>
                       <p>
-                        From ${99} <br />
-                        or ${parseInt(99 / 2)}/mo <br />{" "}
+                        From ₹{99} <br />
+                        or ₹{parseInt(99 / 2)}/mo <br />{" "}
                       </p>
                     </div>
                   </div>
@@ -63,8 +81,8 @@ const Home = () => {
                         <h4>BEST SELL</h4>
                         <h5>Laptop</h5>
                         <p>
-                          From $600 <br />
-                          or ${parseInt(600 / 2)}/mo
+                          From ₹600 <br />
+                          or ₹{parseInt(600 / 2)}/mo
                         </p>
                       </div>
                     </div>
@@ -78,7 +96,7 @@ const Home = () => {
                         <h4>NEW ARRIVAL</h4>
                         <h5>Smart Watch</h5>
                         <p>
-                          From $40 <br /> or ${parseInt(40 / 2)}/mo
+                          From ₹40 <br /> or ₹{parseInt(40 / 2)}/mo
                         </p>
                       </div>
                     </div>
@@ -92,8 +110,8 @@ const Home = () => {
                         <h4>10% Off</h4>
                         <h5>Tablet</h5>
                         <p>
-                          From $150 <br />
-                          or ${parseInt(150 / 2)}/mo
+                          From ₹150 <br />
+                          or ₹{parseInt(150 / 2)}/mo
                         </p>
                       </div>
                     </div>
@@ -107,8 +125,7 @@ const Home = () => {
                         <h4>20% Off</h4>
                         <h5>Headphone</h5>
                         <p>
-                          From $50 <br />
-                          ${parseInt(50 / 2)}/mo
+                          From ₹50 <br />₹{parseInt(50 / 2)}/mo
                         </p>
                       </div>
                     </div>
@@ -118,7 +135,7 @@ const Home = () => {
             </div>
           </section>
 
-          <section className="home-wrapper-2 py-4">
+          <section className="home-wrapper-2 py-5">
             <div className="container-xxl">
               <div className="row">
                 <div className="col-12">
@@ -127,7 +144,7 @@ const Home = () => {
                       <img src="images/service.png" alt="services" />
                       <div>
                         <h6>Free Shipping</h6>
-                        <p className="mb-0">From all orders over $5</p>
+                        <p className="mb-0">From all orders over ₹500</p>
                       </div>
                     </div>
                     <div className="d-flex gap-15 services-item">
@@ -167,21 +184,41 @@ const Home = () => {
           <section className="home-wrapper-2 py-3">
             <div className="container-xxl">
               <div className="row">
-              <div className="col-12">
+                <div className="col-12">
                   <h3 className="section-heading">Categories</h3>
                 </div>
                 <div className="col-12">
                   <div className="categories d-flex justify-content-between align-items-center flex-wrap p-2">
-                    {products && products.map((product)=>(
-                       <div className="d-flex align-items-center">
-                        <div>
-                          <h6>{product.name}</h6>
-                          <p>{product.stock} Items</p>
+                    {categories &&
+                      categories.map((product, i) => (
+                        <div className="d-flex align-items-center" key={i}>
+                          <div>
+                            <h6>{product.title}</h6>
+                          </div>
+                          <img
+                            src={product.imgUrl}
+                            className="img-fluid category-img"
+                            alt="category"
+                          />
                         </div>
-                        <img src={product.images[0].url} className="img-fluid category-img" alt="category"/>
-                       </div>
-                    ))}
+                      ))}
                   </div>
+                  {/* <div className="categories d-flex justify-content-between align-items-center flex-wrap p-2">
+                    {products &&
+                      products.map((product, i) => (
+                        <div className="d-flex align-items-center" key={i}>
+                          <div>
+                            <h6>{product.category}</h6>
+                            <p>{product.stock} Items</p>
+                          </div>
+                          <img
+                            src={product.images[0].url}
+                            className="img-fluid category-img"
+                            alt="category"
+                          />
+                        </div>
+                      ))}
+                  </div> */}
                 </div>
               </div>
             </div>

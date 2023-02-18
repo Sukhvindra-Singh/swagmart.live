@@ -12,7 +12,6 @@ const sendEmail = async (options) => {
       pass: `${process.env.S}`,
     },
   });
-
   var mailOptions = {
     from: process.env.SMTP_MAIL,
     to: options.email,
@@ -23,7 +22,7 @@ const sendEmail = async (options) => {
     if (error) {
       console.log(error);
     } else {
-      console.log(`Email sent hgvghvghj: ` + Info.response);
+      console.log(`Email sent : ` + Info.response);
     }
   });
 };
