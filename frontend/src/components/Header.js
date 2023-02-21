@@ -30,7 +30,7 @@ const Header = () => {
           <div className="row" style={{ height: "55px" }}>
             <div className="col-6">
               <p className="text-white mb-0">
-                Free Shipping Over $100 & Free Returns
+                Free Shipping Over ₹100 & Free Returns
               </p>
             </div>
             <div className="col-6">
@@ -50,7 +50,7 @@ const Header = () => {
           <div className="row align-items-center navbar-1">
             <div className="heading">
               <h2>
-                <Link className="text-white">Dev Corner</Link>
+                <Link className="text-white">Swag Mart</Link>
               </h2>
             </div>
             <div className="search-input">

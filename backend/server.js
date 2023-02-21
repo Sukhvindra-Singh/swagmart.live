@@ -2,8 +2,9 @@ const app = require("./app");
 const dotenv = require("dotenv");
 const connectDatabase = require("./config/database")
 const cloudinary = require("cloudinary");
-
-
+const http = require('http')
+var os = require("os");
+var host = os.hostname();
 //handling uncaught exception
 process.on("uncaughtException",(err)=>{
     console.log(`Error : ${err.message}`);
@@ -12,9 +13,9 @@ process.on("uncaughtException",(err)=>{
 })
 // config
 
-require("dotenv").config({ path: "backend/config/config.env" });
-
-
+if(process.env.NODE_ENV !== "PRODUCTION"){   
+    require("dotenv").config({ path: "backend/config/config.env" });
+}
 
 // Connecting to database
 connectDatabase();
@@ -24,11 +25,11 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   });
-app.get("/store/:keyword",(req,res)=>{
+app.get("*",(req,res)=>{
     res.sendFile(__dirname,"/frontend/public/index.html")
 })
-const server = app.listen(process.env.PORT,()=>{
-    console.log(`Server is working on http://localhost:${process.env.PORT}`);
+const server = app.listen(process.env.PORT,(req,res)=>{
+    console.log(`Server is working on ${host}:${process.env.PORT}`);
 })
 
 // unhandled promise rejection

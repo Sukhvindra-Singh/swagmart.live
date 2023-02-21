@@ -67,6 +67,7 @@ const initialState = {
 export const store = configureStore({
   reducer,
   initialState,
+  devTools : false
 });
 store.dispatch(getTotals());
 export default store;
