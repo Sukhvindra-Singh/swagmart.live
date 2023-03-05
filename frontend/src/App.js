@@ -20,7 +20,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Cart from "./components/Cart/Cart";
 import Shipping from "./components/Cart/Shipping";
 import ConfirmOrder from "./components/Cart/ConfirmOrder";
-import Payment from "./components/Cart/Payment";
+import Buy from "./components/Cart/Buy";
 import OrderSuccess from "./components/Cart/OrderSuccess";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -90,11 +90,11 @@ function App() {
             {isAuthenticated && <Route path="admin/reviews" element={<ProductReviews />} />}
             {isAuthenticated && <Route path="/admin/contacts/query" element={<ContactsQuery/>} />}
             {isAuthenticated && <Route
-              path="payment/process"
+              path="/payment/process"
               element={
                 stripeApiKey && (
                   <Elements stripe={loadStripe(stripeApiKey)}>
-                    <Payment />
+                    <Buy />
                   </Elements>
                 )
               }
@@ -102,7 +102,7 @@ function App() {
              {isAuthenticated && 
               <Route
                 element={
-                  window.location.pathname === "/process/payment" ? null : (
+                  window.location.pathname === "/payment/process" ? null : (
                     <NotFound />
                   )
                 }
