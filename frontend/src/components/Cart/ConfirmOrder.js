@@ -48,9 +48,7 @@ const ConfirmOrder = () => {
     dispatch(createOrder(order));
     navigate("/success");
   };
-  cart.cartItems.map((item) => (
-    console.log(item.images))
-  )
+
   useEffect(() => {
     if (error) {
       alert.error(error);

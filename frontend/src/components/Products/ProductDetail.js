@@ -25,7 +25,7 @@ import {
 import ReviewCard from "./ReviewCard.js";
 import ReactStars from "react-rating-stars-component";
 
-const ProductDetail = () => {
+const ProductDetail = ({user}) => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const { id } = useParams();
@@ -237,7 +237,7 @@ const ProductDetail = () => {
               <div className="reviews" style={{ marginBottom: "50px" }}>
                 {product.reviews &&
                   product.reviews.map((review) => (
-                    <ReviewCard key={review._id} review={review} />
+                    <ReviewCard key={review._id} review={review} user={user}/>
                   ))}
               </div>
             ) : (
