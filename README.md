@@ -2,6 +2,7 @@
 
 Hi! My name is **Sukhvindra Singh**
 
+I am a mern coder and I am pursuing BCA
 
 
 # Install Dependencies
